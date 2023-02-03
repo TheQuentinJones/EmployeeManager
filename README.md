@@ -1,6 +1,6 @@
 # Employee Manager
 
-
+![GitHub](https://img.shields.io/github/license/TheQuentinJones/READMEgenerator)
 
   ## Description
           
