@@ -1,11 +1,7 @@
 const inquirer = require('inquirer')
-const Employee = require('./Employees.js')
-const Departments = require('./Departments.js')
-const Roles = require('./Roles.js')
-const Manager = require('./Manager.js')
-const connection = require('./connection.js')
+const connection = require('../config/connection.js')
 
-updatesToTheSystem = []
+
 
 class DB {
 
@@ -13,17 +9,28 @@ class DB {
         this.connection = connection;
     }
 
-    showDepartments() {}
+    showDepartments() {
+        return connection.promise().query('SELECT name, id FROM department');
+    }
 
-    showRoles() {}
+    showRoles() {
+        return connection.promise().query('SELECT title, id FROM role');
+    }
 
     showEmployees() {
+        
         return connection.promise().query('SELECT first_name, last_name, id FROM employee');
     }
 
-    addDepartment(department) {}
+    addDepartment(response) {
 
-    addRole(role) {}
+
+         return  connection.promise().query('INSERT INTO department(name) VALUES(?) ', response.name)
+
+            
+    }
+
+    addRole() {}
 
     addEmployee(employee) {}
 

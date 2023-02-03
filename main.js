@@ -24,49 +24,22 @@ optionsArray =
     },
 ]
 
-function showDepartments() {
-
-}
-
-function showRoles() {
-
-}
-
-// function showEmployees() {
-
-//     DB.showEmployees()
-
-//     loadPrompts()
-// }
-
-function addDepartment() {
-
-}
-
-function addRole() {
-
-}
-
-function addEmployee() {
-
-}
-
-function updateRole() {
-
-}
-
-function quitNow() {
-
-}
-
 function loadPrompts() {
 
     inquirer.prompt(optionsArray)
     .then(({option}) => {
         if (option === 'View all departments' ) {
-            showDepartments()
+            DB.showDepartments().then( ([results])=> {
+                console.table(results)
+            }).then( ()=> {
+                loadPrompts()
+            })
         } else if (option === 'View all roles') {
-            showRoles()
+            DB.showRoles().then( ([results])=> {
+                console.table(results)
+            }).then( ()=> {
+                loadPrompts()
+            })
         } else if (option === 'View all employees') {
             DB.showEmployees().then( ([results])=> {
                 console.table(results)
@@ -75,23 +48,44 @@ function loadPrompts() {
             })
             
         } else if (option === 'Add a department') {
-            console.log('Why do you want to add a department?')
-            addDepartment()
+            inquirer.prompt([
+                {
+                    type: 'input',
+                    message: 'What is the name of the department?',
+                    name: 'name'
+                }
+            ]).then((response) => {
+            DB.addDepartment(response)
+            }).then( ()=> {
+                loadPrompts()
+            })
         } else if (option === 'Add a role') {
-            addRole()
+            DB.addRole().then( ([results])=> {
+                console.table(results)
+            }).then( ()=> {
+                loadPrompts()
+            })
         } else if (option === 'Add an employee') {
-            addEmployee()
+            DB.addEmployee().then( ([results])=> {
+                console.table(results)
+            }).then( ()=> {
+                loadPrompts()
+            })
         } else if (option === 'Update an employee role') {
-            updateRole()
+            DB.updateRole().then( ([results])=> {
+                console.table(results)
+            }).then( ()=> {
+                loadPrompts()
+            })
         } else if (option === 'Quit'){
-            quitNow()       
+            DB.quitNow()       
         } else {
             console.log('We are having technical difficulties!!')
             
         }
-    }).then((data) => {
-        updatesToTheSystem.push(data)
-    }) 
+    })
+      
+     
 
     
 }
