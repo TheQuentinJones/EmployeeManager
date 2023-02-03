@@ -60,15 +60,54 @@ function loadPrompts() {
                 loadPrompts()
             })
         } else if (option === 'Add a role') {
-            DB.addRole().then( ([results])=> {
-                console.table(results)
+                                     
+                
+            inquirer.prompt([
+                {
+                    type: 'input',
+                    message: 'What role would you like to add?',
+                    name: 'title',
+                },
+                {
+                    type: 'input',
+                    message: 'What is the salary for this role?',
+                    name: 'salary',
+                },
+                {
+                    type: 'input',
+                    message: 'Which department is this role in?',
+                    name: 'department',
+                },
+            ]).then((response) => {
+            DB.addRole(response)
             }).then( ()=> {
                 loadPrompts()
             })
         } else if (option === 'Add an employee') {
-            DB.addEmployee().then( ([results])=> {
-                console.table(results)
-            }).then( ()=> {
+
+            inquirer.prompt([
+                {
+                    type: 'input',
+                    message: 'What is the first name of this employee?',
+                    name: 'fname',
+                },
+                {
+                    type: 'input',
+                    message: 'What is the last name for this employee?',
+                    name: 'lname',
+                },
+                {
+                    type: 'input',
+                    message: 'What is the role of this employee?',
+                    name: 'role',
+                },
+                {
+                    type: 'input',
+                    message: 'Who is the manager for this employee?',
+                    name: 'manager',
+                },
+            ]).then((responses) => {
+            DB.addEmployee(responses)}).then( ()=> {
                 loadPrompts()
             })
         } else if (option === 'Update an employee role') {

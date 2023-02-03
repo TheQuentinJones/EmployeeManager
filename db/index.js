@@ -19,7 +19,7 @@ class DB {
 
     showEmployees() {
         
-        return connection.promise().query('SELECT first_name, last_name, id FROM employee');
+        return connection.promise().query('SELECT first_name, last_name, id FROM employees');
     }
 
     addDepartment(response) {
@@ -30,9 +30,14 @@ class DB {
             
     }
 
-    addRole() {}
+    addRole(response) {
+        return connection.promise().query(`INSERT INTO role(title, salary, department_id) VALUES ('${response.title}', '${response.salary}', '${response.department}')`)
+    }
 
-    addEmployee(employee) {}
+    addEmployee(response) {
+
+        return connection.promise().query(`INSERT INTO employees(first_name, last_name, role_id, manager_id) VALUES ('${response.fname}', '${response.lname}', '${response.role}', '${response.manager}')`)
+    }
 
     updateRole() {}
 
