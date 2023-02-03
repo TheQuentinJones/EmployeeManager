@@ -16,13 +16,14 @@ optionsArray =
             'Add a department',
             'Add a role',
             'Add an employee',
-            'Update an employee role',
             'Quit'
         ],
 
         name: 'option',
     },
 ]
+
+
 
 function loadPrompts() {
 
@@ -110,14 +111,30 @@ function loadPrompts() {
             DB.addEmployee(responses)}).then( ()=> {
                 loadPrompts()
             })
-        } else if (option === 'Update an employee role') {
-            DB.updateRole().then( ([results])=> {
-                console.table(results)
-            }).then( ()=> {
-                loadPrompts()
+        } else if (option === 'Update a role') {
+            inquirer.prompt([
+                {
+                    type: 'input',
+                    message: 'What role would you like to update?',
+                    name: 'title',
+                },
+                {
+                    type: 'input',
+                    message: 'What is the salary for this role?',
+                    name: 'salary',
+                },
+                {
+                    type: 'input',
+                    message: 'Which department is this role in?',
+                    name: 'department',
+                },
+            ]).then((responses) => {
+                    DB.updateRole(responses).then( () => {
+                    loadPrompts()
+                })
             })
         } else if (option === 'Quit'){
-            DB.quitNow()       
+            return    `Goodbye!`
         } else {
             console.log('We are having technical difficulties!!')
             
