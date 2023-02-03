@@ -1,5 +1,7 @@
 const DB = require('./db/index.js')
 const inquirer = require('inquirer')
+const { addEmployee, connection } = require('./db/index.js')
+const { QueryInterface } = require('sequelize')
 
 optionsArray = 
 
@@ -85,32 +87,9 @@ function loadPrompts() {
                 loadPrompts()
             })
         } else if (option === 'Add an employee') {
+            employeeQuestions()
 
-            inquirer.prompt([
-                {
-                    type: 'input',
-                    message: 'What is the first name of this employee?',
-                    name: 'fname',
-                },
-                {
-                    type: 'input',
-                    message: 'What is the last name for this employee?',
-                    name: 'lname',
-                },
-                {
-                    type: 'input',
-                    message: 'What is the role of this employee?',
-                    name: 'role',
-                },
-                {
-                    type: 'input',
-                    message: 'Who is the manager for this employee?',
-                    name: 'manager',
-                },
-            ]).then((responses) => {
-            DB.addEmployee(responses)}).then( ()=> {
-                loadPrompts()
-            })
+
         } else if (option === 'Update a role') {
             inquirer.prompt([
                 {
@@ -134,7 +113,10 @@ function loadPrompts() {
                 })
             })
         } else if (option === 'Quit'){
-            return    `Goodbye!`
+          
+           
+           console.log("Goodbye!")          
+            
         } else {
             console.log('We are having technical difficulties!!')
             
@@ -143,6 +125,39 @@ function loadPrompts() {
       
      
 
+    
+}
+
+function employeeQuestions() {
+
+   
+        
+    inquirer.prompt([
+        {
+            // type: 'input',
+            message: 'What is the first name of this employee?',
+            name: 'fname',
+        },
+        {
+            type: 'input',
+            message: 'What is the last name for this employee?',
+            name: 'lname',
+        },
+        {
+            type: 'input',
+            message: 'What is the role of this employee?',
+            name: 'role',
+        },
+        {
+            type: 'input',
+            message: 'Who is the manager for this employee?',
+            name: 'manager',
+        },
+        ]).then((responses) => {
+        DB.addEmployee(responses)}).then( ()=> {
+            loadPrompts()
+        }
+    )
     
 }
 

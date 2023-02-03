@@ -14,12 +14,12 @@ class DB {
     }
 
     showRoles() {
-        return connection.promise().query('SELECT title, id FROM role');
+        return connection.promise().query('SELECT * FROM role');
     }
 
     showEmployees() {
         
-        return connection.promise().query('SELECT first_name, last_name, id FROM employees');
+        return connection.promise().query('SELECT * FROM employees');
     }
 
     addDepartment(response) {
@@ -42,6 +42,7 @@ class DB {
     updateRole(responses) {
         return connection.promise().query(`UPDATE role(title, salary, department_id) VALUES ('${responses.title}', '${responses.salary}', '${responses.department}');`)
     }
+
 
 }
 
